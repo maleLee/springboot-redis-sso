@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <script type="text/javascript" src="static/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            var redirectPage = $("#current_page").text();
+            $("#do_login").click(function () {
+                $.post("doLogin", $("#forms").serialize(), function (data) {
+                   if(data != null) {
+                        if(redirectPage != null) {
+                            location.href = redirectPage;
+                        } else {
+                            location.href = "http://127.0.0.1:8081";
+                        }
+                   }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Login Page</h1>
+    <form id="forms">
+        UserName:<input type="text" name="username" /> <br />
+        Password:<input type="password" name="password" /> <br />
+        <input id="do_login" type="button" value="Submit" />
+    </form>
+    <span style="display: none;" id="current_page" th:text="${currentPage}"></span>
+</body>
+</html>
